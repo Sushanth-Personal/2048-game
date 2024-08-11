@@ -81,7 +81,8 @@ function addNewTiles() {
         box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0);
         font-weight: bold;
         text-align: center;
-        transition:3s;
+        transition:3s
+
   `;
       document.querySelector(".grid-container").appendChild(newTile);
       console.log(newTile);
@@ -100,10 +101,9 @@ function selectClass(className, num = 0) {
 document.addEventListener("keydown", (event) => {
   switch (event.key) {
     case "ArrowUp":
-        while(moreTransition){
-      moveTiles("up");
+      updateGrid();
       console.log("up");
-        }
+
       break;
     case "ArrowDown":
       moveTiles("down");
@@ -122,42 +122,166 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-function findKey(object, pos) {}
+// function updateGrid(){
 
-function moveTiles(dir) {
-    console.log("im executed");
-    console.log(gridData);
-  if (dir === "up") {
+//   let loopCount=0;
+//   Object.keys(gridData).forEach((key)=>{
+//     console.log(key);
+//     moreTransition="true";
+//     console.log("frist entry");
+//     if(gridData[key].pos>4){
+//       console.log("i got here");
+//       console.log(moreTransition );
+//       console.log(gridData);
+//     while(moreTransition){
+//       console.log("whileloop");
+//   //     loopCount++;
+//   //     console.log("loopCount",loopCount);
+//   //     console.log(gridData);
+//   //     console.log( gridData[gridData[key].pos-4]);
+//   //     console.log(gridData[key].count!==0);
+//   //     console.log(gridData[gridData[key].pos-4].count===0 );
+//   //     console.log( gridData[gridData[key].pos-4].count===0 && gridData[key].count!==0);
 
-    let gridKey = Object.keys(gridData);
+//    if( gridData[gridData[key].pos-4].count===0 && gridData[key].count!==0){
+//     console.log("im here");
+//       gridData[gridData[key].pos-4].count=gridData[key].count;
+//       gridData[key].count=0;
+//       console.log(gridData);
+      
+//     if(loopCount>100){
+//       moreTransition=false;
+//       console.log("loopbroke");
+//       }
+//    }else{
+//     moreTransition=false;
+//    }
+//   }console.log("loopbroken");
+// }
 
-    gridKey.forEach((key) => {
+//   });
 
-      if (gridData[key].count !== 0) {
+// }
 
-        if (gridData[key].pos > 4) {
-          let targetPos = gridData[key].pos - 4;
+// function updateGrid() {
+//   Object.keys(gridData).forEach((key) => {
+//     let currentPos = gridData[key].pos;
 
+//     if (currentPos > 4 && gridData[key].count !== 0) {
 
-          if (gridData[targetPos].count === 0) {
-            let currentTile = selectClass(`tile-${key}`, 0);
-            currentTile.style.transition = "transform 0.4s";
-            currentTile.style.transform = `translateY(-125px)`;
-            gridData[targetPos].count = 2;
-            gridData[key].count = 0;
-            document.addEventListener("transitionend", addNewTiles);
+//       while (currentPos > 4) {
+//         let targetPos = currentPos - 4;
 
-          }
+//         if (gridData[targetPos].count === 0) {
 
-        }
-      }
-    }
-);
+//           gridData[targetPos].count = gridData[currentPos].count;
+//           gridData[currentPos].count = 0;
+          
 
+//           currentPos = targetPos;
+//         } else {
 
-  }
+//           break;
+//         }
+//       }
+//     }
+//   });
+
+//   // After moving all tiles, update the DOM
+//   addNewTiles();
+// }
+
+function updateGrid() {
+  let gridKeys = Object.keys(gridData);
   
+  // Iterate over the grid from top to bottom
+  for (let i = 0; i < gridKeys.length; i++) {
+    let key = gridKeys[i];
+    let currentPos = gridData[key].pos;
+
+    if (gridData[key].count !== 0) {
+      moveTileUp(key, currentPos);
+    }
+  }
 }
+
+function moveTileUp(key, currentPos) {
+  let distance = 0;
+  
+  // Calculate how far the tile can move up
+  while (currentPos > 4) {
+    let targetPos = currentPos - 4;
+    if (gridData[targetPos].count === 0) {
+      distance += 125; // 125px is the height of each tile's step
+      currentPos = targetPos;
+    } else 
+      break;
+    
+  }
+
+  if (distance > 0) {
+    let currentTile = selectClass(`tile-${key}`, 0);
+    gridData[currentPos].count = gridData[key].count;
+    gridData[key].count = 0;
+
+    // Apply transition
+    currentTile.style.transition = "transform 0.3s";
+    currentTile.style.transform = `translateY(-${distance}px)`;
+
+    // After the transition ends, update the grid and DOM
+    currentTile.addEventListener("transitionend", function handler() {
+      currentTile.removeEventListener("transitionend", handler);
+      
+      // Reset transform
+      currentTile.style.transition = "";
+      currentTile.style.transform = "";
+
+      // Move the tile to the new position in the DOM
+      addNewTiles();
+    });
+  }
+}
+
+
+
+// function moveTiles(dir) {
+//     console.log("im executed");
+//     console.log(gridData);
+//   if (dir === "up") {
+
+//     let gridKey = Object.keys(gridData);
+
+//     gridKey.forEach((key) => {
+
+//       if (gridData[key].count !== 0) {
+
+//         if (gridData[key].pos > 4) {
+//           let targetPos = gridData[key].pos - 4;
+        
+
+
+
+//           if (gridData[targetPos].count === 0) {
+//             let currentTile = selectClass(`tile-${key}`, 0);
+//             currentTile.style.transition = "transform 0.4s";
+//             currentTile.style.transform = `translateY(-125px)`;
+//             gridData[targetPos].count = 2;
+//             gridData[key].count = 0;
+//             document.addEventListener("transitionend", addNewTiles);
+            
+
+//           }
+
+//         }
+//         else{moreTransition=false;}
+//       }
+//     }
+// );
+
+
+//   }
+  
+// }
 
 function getRandomTiles() {
   // Generate the first random number between 1 and 16
