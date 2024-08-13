@@ -23,22 +23,22 @@ let tileData = {
 };
 
 let gridData = {
-  1: { count: 0, top: 10, left: 17, pos: 1, merge:false},
-  2: { count: 0, top: 10, left: 143, pos: 2, merge:false},
-  3: { count: 0, top: 10, left: 268, pos: 3, merge:false, merge:false },
-  4: { count: 0, top: 10, left: 391, pos: 4, merge:false },
-  5: { count: 0, top: 135, left: 17, pos: 5, merge:false },
-  6: { count: 0, top: 135, left: 143, pos: 6, merge:false },
-  7: { count: 0, top: 135, left: 268, pos: 7, merge:false },
-  8: { count: 0, top: 135, left: 391, pos: 8, merge:false },
-  9: { count: 2, top: 260, left: 17, pos: 9, merge:false },
-  10: { count: 0, top: 260, left: 143, pos: 10, merge:false },
-  11: { count: 2, top: 260, left: 268, pos: 11, merge:false },
-  12: { count: 0, top: 260, left: 391, pos: 12, merge:false },
-  13: { count: 0, top: 384, left: 17, pos: 13, merge:false },
-  14: { count: 0, top: 384, left: 143, pos: 14, merge:false },
-  15: { count: 0, top: 384, left: 268, pos: 15, merge:false },
-  16: { count: 0, top: 384, left: 391, pos: 16, merge:false },
+  1: { count: 0, top: 10, left: 17, pos: 1, merge:false, Llimit:1, Rlimit:4},
+  2: { count: 0, top: 10, left: 142, pos: 2, merge:false, Llimit:1, Rlimit:4},
+  3: { count: 0, top: 10, left: 267, pos: 3, merge:false, Llimit:1, Rlimit:4},
+  4: { count: 0, top: 10, left: 392, pos: 4, merge:false, Llimit:1, Rlimit:4 },
+  5: { count: 0, top: 135, left: 17, pos: 5, merge:false, Llimit:5, Rlimit:8 },
+  6: { count: 0, top: 135, left: 142, pos: 6, merge:false, Llimit:5, Rlimit:8 },
+  7: { count: 0, top: 135, left: 267, pos: 7, merge:false, Llimit:5, Rlimit:8 },
+  8: { count: 0, top: 135, left: 392, pos: 8, merge:false, Llimit:5, Rlimit:8 },
+  9: { count: 2, top: 260, left: 17, pos: 9, merge:false, Llimit:9, Rlimit:12 },
+  10: { count: 0, top: 260, left: 142, pos: 10, merge:false, Llimit:9, Rlimit:12 },
+  11: { count: 2, top: 260, left: 267, pos: 11, merge:false, Llimit:9, Rlimit:12 },
+  12: { count: 0, top: 260, left: 392, pos: 12, merge:false, Llimit:9, Rlimit:12 },
+  13: { count: 0, top: 384, left: 17, pos: 13, merge:false, Llimit:13, Rlimit:16 },
+  14: { count: 0, top: 384, left: 142, pos: 14, merge:false, Llimit:13, Rlimit:16 },
+  15: { count: 0, top: 384, left: 267, pos: 15, merge:false, Llimit:13, Rlimit:16 },
+  16: { count: 0, top: 384, left: 392, pos: 16, merge:false, Llimit:13, Rlimit:16},
 };
 
 const newGameButton = selectClass("new-game", 0);
@@ -107,18 +107,21 @@ document.addEventListener("keydown", (event) => {
   switch (event.key) {
     case "ArrowUp":
       reset();
-      updateGrid();
+      updateGrid("up");
       getRandomTiles();
       console.log("up");
 
       break;
     case "ArrowDown":
-      moveTiles("down");
+      reset();
+      updateGrid("down");
+      getRandomTiles();
       console.log("down");
       break;
     case "ArrowLeft":
-      moveTiles("left");
-      console.log("left");
+      reset();
+      updateGrid("left");
+      getRandomTiles();
       break;
     case "ArrowRight":
       console.log("right");
@@ -129,7 +132,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-function updateGrid() {
+function updateGrid(dir) {
   let gridKeys = Object.keys(gridData);
 
   for (let i = 0; i < gridKeys.length; i++) {
@@ -137,7 +140,18 @@ function updateGrid() {
     let currentPos = gridData[key].pos;
 
     if (gridData[key].count !== 0 && gridData[key].merge==false) {
-      moveTileUp(key, currentPos);
+      switch(dir){
+        case "up":
+           moveTileUp(key, currentPos);
+            break;
+        case "down":
+          moveTileDown(key, currentPos);
+          break;
+        case "left":
+          moveTileLeft(key, currentPos);
+        default: break;
+      }
+      
     }
   }
 
@@ -146,7 +160,6 @@ function updateGrid() {
 function moveTileUp(key, currentPos) {
   let distance = 0;
 
-  // Calculate how far the tile can move up
  while (currentPos > 4) {
     let targetPos = currentPos - 4;
 
@@ -204,6 +217,127 @@ function moveTileUp(key, currentPos) {
   }
 }
 
+function moveTileDown(key, currentPos){
+  let distance = 0;
+
+  while (currentPos < 13) {
+     let targetPos = currentPos + 4;
+ 
+     if (gridData[currentPos].count !== 0) {
+ 
+       if (
+         gridData[targetPos].count === 0 || gridData[targetPos].count === gridData[currentPos].count ) {
+ 
+         if (
+           gridData[targetPos].count === gridData[currentPos].count 
+         ) {
+ 
+           merge = true;
+ 
+           distance += 125;
+ 
+ 
+           gridData[targetPos].count = 2 * gridData[currentPos].count;
+           gridData[currentPos].count = 0;
+           gridData[targetPos].merge=true;
+           break ;
+           
+         } else {
+           distance += 125; // 125px is the height of each tile's step
+           gridData[targetPos].count = gridData[currentPos].count;
+           gridData[currentPos].count = 0;
+           currentPos = targetPos;
+ 
+         }
+       } else break;
+     }
+   }
+ 
+   if (distance > 0) {
+ 
+     let currentTile = selectClass(`tile-${key}`, 0);
+ 
+     let targetTile = selectClass(`tile-${key + 4}`, 0);
+ 
+ 
+     // Apply transition
+     currentTile.style.transition = "transform 0.3s";
+     currentTile.style.transform = `translateY(${distance}px)`;
+ 
+     // After the transition ends, update the grid and DOM
+     currentTile.addEventListener("transitionend", function handler() {
+ 
+       addNewTiles();
+       // Reset transform
+       currentTile.style.transition = "";
+       currentTile.style.transform = "";
+ 
+ 
+     });
+   }
+}
+
+function moveTileLeft(key, currentPos){
+  let distance = 0;
+console.log(gridData);
+ while (currentPos>gridData[currentPos].Llimit) {
+  console.log("times");
+    let targetPos = currentPos - 1;
+
+    if (gridData[currentPos].count !== 0) {
+
+console.log(gridData[currentPos]);
+      if (
+        gridData[targetPos].count === 0 || gridData[targetPos].count === gridData[currentPos].count ) {
+
+        if (
+          gridData[targetPos].count === gridData[currentPos].count 
+        ) {
+
+          merge = true;
+
+          distance += 125;
+
+
+          gridData[targetPos].count = 2 * gridData[currentPos].count;
+          gridData[currentPos].count = 0;
+          gridData[targetPos].merge=true;
+          break ;
+          
+        } else {
+          distance += 125; // 125px is the height of each tile's step
+          gridData[targetPos].count = gridData[currentPos].count;
+          gridData[currentPos].count = 0;
+          currentPos = targetPos;
+
+        }
+      } else break;
+    }
+  }
+
+  if (distance > 0) {
+    console.log("igot");
+    let currentTile = selectClass(`tile-${key}`, 0);
+
+    let targetTile = selectClass(`tile-${key - 1}`, 0);
+
+
+    // Apply transition
+    currentTile.style.transition = "transform 0.3s";
+    currentTile.style.transform = `translateX(-${distance}px)`;
+
+    // After the transition ends, update the grid and DOM
+    currentTile.addEventListener("transitionend", function handler() {
+
+      addNewTiles();
+      // Reset transform
+      currentTile.style.transition = "";
+      currentTile.style.transform = "";
+
+
+    });
+  }
+}
 
 function getRandomTiles() {
   // Generate the first random number between 1 and 16
