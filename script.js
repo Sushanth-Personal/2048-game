@@ -2,6 +2,7 @@ let moveValue = 0;
 let moreTransition = true;
 let mergeCount = 0;
 let merge = false;
+let score = 0;
 
 let tileData = {
   one: { count: 0, top: "", left: "" },
@@ -23,27 +24,156 @@ let tileData = {
 };
 
 let gridData = {
-  1: { count: 0, top: 10, left: 17, pos: 1, merge:false, Llimit:1, Rlimit:4},
-  2: { count: 0, top: 10, left: 142, pos: 2, merge:false, Llimit:1, Rlimit:4},
-  3: { count: 0, top: 10, left: 267, pos: 3, merge:false, Llimit:1, Rlimit:4},
-  4: { count: 0, top: 10, left: 392, pos: 4, merge:false, Llimit:1, Rlimit:4 },
-  5: { count: 0, top: 135, left: 17, pos: 5, merge:false, Llimit:5, Rlimit:8 },
-  6: { count: 0, top: 135, left: 142, pos: 6, merge:false, Llimit:5, Rlimit:8 },
-  7: { count: 0, top: 135, left: 267, pos: 7, merge:false, Llimit:5, Rlimit:8 },
-  8: { count: 0, top: 135, left: 392, pos: 8, merge:false, Llimit:5, Rlimit:8 },
-  9: { count: 2, top: 260, left: 17, pos: 9, merge:false, Llimit:9, Rlimit:12 },
-  10: { count: 0, top: 260, left: 142, pos: 10, merge:false, Llimit:9, Rlimit:12 },
-  11: { count: 2, top: 260, left: 267, pos: 11, merge:false, Llimit:9, Rlimit:12 },
-  12: { count: 0, top: 260, left: 392, pos: 12, merge:false, Llimit:9, Rlimit:12 },
-  13: { count: 0, top: 384, left: 17, pos: 13, merge:false, Llimit:13, Rlimit:16 },
-  14: { count: 0, top: 384, left: 142, pos: 14, merge:false, Llimit:13, Rlimit:16 },
-  15: { count: 0, top: 384, left: 267, pos: 15, merge:false, Llimit:13, Rlimit:16 },
-  16: { count: 0, top: 384, left: 392, pos: 16, merge:false, Llimit:13, Rlimit:16},
+  1: {
+    count: 0,
+    top: 10,
+    left: 17,
+    pos: 1,
+    merge: false,
+    Llimit: 1,
+    Rlimit: 4,
+  },
+  2: {
+    count: 0,
+    top: 10,
+    left: 142,
+    pos: 2,
+    merge: false,
+    Llimit: 1,
+    Rlimit: 4,
+  },
+  3: {
+    count: 0,
+    top: 10,
+    left: 267,
+    pos: 3,
+    merge: false,
+    Llimit: 1,
+    Rlimit: 4,
+  },
+  4: {
+    count: 0,
+    top: 10,
+    left: 392,
+    pos: 4,
+    merge: false,
+    Llimit: 1,
+    Rlimit: 4,
+  },
+  5: {
+    count: 0,
+    top: 135,
+    left: 17,
+    pos: 5,
+    merge: false,
+    Llimit: 5,
+    Rlimit: 8,
+  },
+  6: {
+    count: 0,
+    top: 135,
+    left: 142,
+    pos: 6,
+    merge: false,
+    Llimit: 5,
+    Rlimit: 8,
+  },
+  7: {
+    count: 0,
+    top: 135,
+    left: 267,
+    pos: 7,
+    merge: false,
+    Llimit: 5,
+    Rlimit: 8,
+  },
+  8: {
+    count: 0,
+    top: 135,
+    left: 392,
+    pos: 8,
+    merge: false,
+    Llimit: 5,
+    Rlimit: 8,
+  },
+  9: {
+    count: 2,
+    top: 260,
+    left: 17,
+    pos: 9,
+    merge: false,
+    Llimit: 9,
+    Rlimit: 12,
+  },
+  10: {
+    count: 0,
+    top: 260,
+    left: 142,
+    pos: 10,
+    merge: false,
+    Llimit: 9,
+    Rlimit: 12,
+  },
+  11: {
+    count: 2,
+    top: 260,
+    left: 267,
+    pos: 11,
+    merge: false,
+    Llimit: 9,
+    Rlimit: 12,
+  },
+  12: {
+    count: 0,
+    top: 260,
+    left: 392,
+    pos: 12,
+    merge: false,
+    Llimit: 9,
+    Rlimit: 12,
+  },
+  13: {
+    count: 0,
+    top: 384,
+    left: 17,
+    pos: 13,
+    merge: false,
+    Llimit: 13,
+    Rlimit: 16,
+  },
+  14: {
+    count: 0,
+    top: 384,
+    left: 142,
+    pos: 14,
+    merge: false,
+    Llimit: 13,
+    Rlimit: 16,
+  },
+  15: {
+    count: 0,
+    top: 384,
+    left: 267,
+    pos: 15,
+    merge: false,
+    Llimit: 13,
+    Rlimit: 16,
+  },
+  16: {
+    count: 0,
+    top: 384,
+    left: 392,
+    pos: 16,
+    merge: false,
+    Llimit: 13,
+    Rlimit: 16,
+  },
 };
 
 const newGameButton = selectClass("new-game", 0);
 
 newGameButton.addEventListener("click", function startNewGame() {
+  document.addEventListener("keydown", handleKeyDown);
   let gridValue = Object.values(gridData).forEach((tile) => {
     tile.count = 0;
 
@@ -57,7 +187,6 @@ newGameButton.addEventListener("click", function startNewGame() {
 });
 
 function addNewTiles(textContent = 2) {
-
   for (let key in gridData) {
     let currentTile = selectClass(`tile-${key}`, 0);
     if (currentTile) {
@@ -68,6 +197,7 @@ function addNewTiles(textContent = 2) {
       let newTile = document.createElement("div");
       newTile.className = `tile-${key}`;
       newTile.textContent = gridData[key].count;
+
       newTile.style.cssText = `
         position: absolute;
         width: 106px;
@@ -84,6 +214,41 @@ function addNewTiles(textContent = 2) {
         font-weight: bold;
         text-align: center;`;
 
+      if (gridData[key].count == 4) {
+        newTile.style.backgroundColor = "#eee1c9";
+      }
+      if (gridData[key].count == 8) {
+        newTile.style.backgroundColor = "#f3b27a";
+      }
+
+      if (gridData[key].count == 16) {
+        newTile.style.backgroundColor = "#f69664";
+      }
+
+      if (gridData[key].count == 32) {
+        newTile.style.backgroundColor = "#f77c5f";
+      }
+
+      if (gridData[key].count == 64) {
+        newTile.style.backgroundColor = "#f75f3b";
+      }
+
+      if (gridData[key].count == 128) {
+        newTile.style.backgroundColor = "#edd073";
+      }
+      if (gridData[key].count == 256) {
+        newTile.style.backgroundColor = "#edcc62";
+      }
+      if (gridData[key].count == 512) {
+        newTile.style.backgroundColor = "#89CFF0";
+      }
+      if (gridData[key].count == 1024) {
+        newTile.style.backgroundColor = "#0096FF";
+      }
+      if (gridData[key].count == 2048) {
+        newTile.style.backgroundColor = "#40B5AD";
+      }
+
       document.querySelector(".grid-container").appendChild(newTile);
     }
   }
@@ -97,13 +262,13 @@ function selectClass(className, num = 0) {
   return document.getElementsByClassName(className)[num];
 }
 
-function reset(){
-  for( let key in gridData){
-    gridData[key].merge=false;
+function reset() {
+  for (let key in gridData) {
+    gridData[key].merge = false;
   }
 }
 
-document.addEventListener("keydown", (event) => {
+function handleKeyDown(event) {
   switch (event.key) {
     case "ArrowUp":
       reset();
@@ -117,20 +282,25 @@ document.addEventListener("keydown", (event) => {
       updateGrid("down");
       getRandomTiles();
       console.log("down");
+
       break;
     case "ArrowLeft":
       reset();
       updateGrid("left");
       getRandomTiles();
+
       break;
     case "ArrowRight":
       console.log("right");
-      moveTiles("right");
+      reset();
+      updateGrid("right");
+      getRandomTiles();
+
       break;
     default:
       break;
   }
-});
+}
 
 function updateGrid(dir) {
   let gridKeys = Object.keys(gridData);
@@ -139,66 +309,79 @@ function updateGrid(dir) {
     let key = gridKeys[i];
     let currentPos = gridData[key].pos;
 
-    if (gridData[key].count !== 0 && gridData[key].merge==false) {
-      switch(dir){
+    if (gridData[key].count !== 0 && gridData[key].merge == false) {
+      switch (dir) {
         case "up":
-           moveTileUp(key, currentPos);
-            break;
+          moveTileUp(key, currentPos);
+          break;
         case "down":
           moveTileDown(key, currentPos);
           break;
         case "left":
           moveTileLeft(key, currentPos);
-        default: break;
+          break;
+        case "right":
+          moveTileRight(key, currentPos);
+          break;
+        default:
+          break;
       }
-      
     }
   }
-
 }
 
+// function checkGameOver(){
+//   let sum=0;
+//   for(let key in gridData){
+//     if(gridData[key].count!=gridData[key+1].count){
+//     sum = sum + 2;
+//     console.log("sum",sum);
+//     }
+//     if(sum==32){
+//       console.log("gameover");
+//       alert("gameover");
+//     }
+//   }
+// }
+function updateScore(upscore) {
+  score = score + upscore;
+  document.getElementById("score").textContent = score;
+}
 function moveTileUp(key, currentPos) {
   let distance = 0;
 
- while (currentPos > 4) {
+  while (currentPos > 4) {
     let targetPos = currentPos - 4;
 
     if (gridData[currentPos].count !== 0) {
-
       if (
-        gridData[targetPos].count === 0 || gridData[targetPos].count === gridData[currentPos].count ) {
-
-        if (
-          gridData[targetPos].count === gridData[currentPos].count 
-        ) {
-
+        gridData[targetPos].count === 0 ||
+        gridData[targetPos].count === gridData[currentPos].count
+      ) {
+        if (gridData[targetPos].count === gridData[currentPos].count) {
           merge = true;
 
           distance += 125;
 
-
           gridData[targetPos].count = 2 * gridData[currentPos].count;
           gridData[currentPos].count = 0;
-          gridData[targetPos].merge=true;
-          break ;
-          
+          gridData[targetPos].merge = true;
+          updateScore(gridData[targetPos].count);
+          break;
         } else {
           distance += 125; // 125px is the height of each tile's step
           gridData[targetPos].count = gridData[currentPos].count;
           gridData[currentPos].count = 0;
           currentPos = targetPos;
-
         }
       } else break;
     }
   }
 
   if (distance > 0) {
-
     let currentTile = selectClass(`tile-${key}`, 0);
 
     let targetTile = selectClass(`tile-${key - 4}`, 0);
-
 
     // Apply transition
     currentTile.style.transition = "transform 0.3s";
@@ -206,121 +389,99 @@ function moveTileUp(key, currentPos) {
 
     // After the transition ends, update the grid and DOM
     currentTile.addEventListener("transitionend", function handler() {
-
       addNewTiles();
       // Reset transform
       currentTile.style.transition = "";
       currentTile.style.transform = "";
-
-
     });
   }
 }
 
-function moveTileDown(key, currentPos){
+function moveTileDown(key, currentPos) {
   let distance = 0;
 
   while (currentPos < 13) {
-     let targetPos = currentPos + 4;
- 
-     if (gridData[currentPos].count !== 0) {
- 
-       if (
-         gridData[targetPos].count === 0 || gridData[targetPos].count === gridData[currentPos].count ) {
- 
-         if (
-           gridData[targetPos].count === gridData[currentPos].count 
-         ) {
- 
-           merge = true;
- 
-           distance += 125;
- 
- 
-           gridData[targetPos].count = 2 * gridData[currentPos].count;
-           gridData[currentPos].count = 0;
-           gridData[targetPos].merge=true;
-           break ;
-           
-         } else {
-           distance += 125; // 125px is the height of each tile's step
-           gridData[targetPos].count = gridData[currentPos].count;
-           gridData[currentPos].count = 0;
-           currentPos = targetPos;
- 
-         }
-       } else break;
-     }
-   }
- 
-   if (distance > 0) {
- 
-     let currentTile = selectClass(`tile-${key}`, 0);
- 
-     let targetTile = selectClass(`tile-${key + 4}`, 0);
- 
- 
-     // Apply transition
-     currentTile.style.transition = "transform 0.3s";
-     currentTile.style.transform = `translateY(${distance}px)`;
- 
-     // After the transition ends, update the grid and DOM
-     currentTile.addEventListener("transitionend", function handler() {
- 
-       addNewTiles();
-       // Reset transform
-       currentTile.style.transition = "";
-       currentTile.style.transform = "";
- 
- 
-     });
-   }
-}
-
-function moveTileLeft(key, currentPos){
-  let distance = 0;
-console.log(gridData);
- while (currentPos>gridData[currentPos].Llimit) {
-  console.log("times");
-    let targetPos = currentPos - 1;
+    let targetPos = currentPos + 4;
 
     if (gridData[currentPos].count !== 0) {
-
-console.log(gridData[currentPos]);
       if (
-        gridData[targetPos].count === 0 || gridData[targetPos].count === gridData[currentPos].count ) {
-
-        if (
-          gridData[targetPos].count === gridData[currentPos].count 
-        ) {
-
+        gridData[targetPos].count === 0 ||
+        gridData[targetPos].count === gridData[currentPos].count
+      ) {
+        if (gridData[targetPos].count === gridData[currentPos].count) {
           merge = true;
 
           distance += 125;
 
-
           gridData[targetPos].count = 2 * gridData[currentPos].count;
           gridData[currentPos].count = 0;
-          gridData[targetPos].merge=true;
-          break ;
-          
+          gridData[targetPos].merge = true;
+          updateScore(gridData[targetPos].count);
+          break;
         } else {
           distance += 125; // 125px is the height of each tile's step
           gridData[targetPos].count = gridData[currentPos].count;
           gridData[currentPos].count = 0;
           currentPos = targetPos;
-
         }
       } else break;
     }
   }
 
   if (distance > 0) {
-    console.log("igot");
+    let currentTile = selectClass(`tile-${key}`, 0);
+
+    let targetTile = selectClass(`tile-${key + 4}`, 0);
+
+    // Apply transition
+    currentTile.style.transition = "transform 0.3s";
+    currentTile.style.transform = `translateY(${distance}px)`;
+
+    // After the transition ends, update the grid and DOM
+    currentTile.addEventListener("transitionend", function handler() {
+      addNewTiles();
+      // Reset transform
+      currentTile.style.transition = "";
+      currentTile.style.transform = "";
+    });
+  }
+}
+
+function moveTileLeft(key, currentPos) {
+  let distance = 0;
+
+  while (currentPos > gridData[currentPos].Llimit) {
+    let targetPos = currentPos - 1;
+
+    if (gridData[currentPos].count !== 0) {
+      if (
+        gridData[targetPos].count === 0 ||
+        gridData[targetPos].count === gridData[currentPos].count
+      ) {
+        if (gridData[targetPos].count === gridData[currentPos].count) {
+          merge = true;
+
+          distance += 125;
+
+          gridData[targetPos].count = 2 * gridData[currentPos].count;
+          gridData[currentPos].count = 0;
+          gridData[targetPos].merge = true;
+          updateScore(gridData[targetPos].count);
+          break;
+        } else {
+          distance += 125; // 125px is the height of each tile's step
+          gridData[targetPos].count = gridData[currentPos].count;
+          gridData[currentPos].count = 0;
+          currentPos = targetPos;
+        }
+      } else break;
+    }
+  }
+
+  if (distance > 0) {
     let currentTile = selectClass(`tile-${key}`, 0);
 
     let targetTile = selectClass(`tile-${key - 1}`, 0);
-
 
     // Apply transition
     currentTile.style.transition = "transform 0.3s";
@@ -328,13 +489,60 @@ console.log(gridData[currentPos]);
 
     // After the transition ends, update the grid and DOM
     currentTile.addEventListener("transitionend", function handler() {
-
       addNewTiles();
       // Reset transform
       currentTile.style.transition = "";
       currentTile.style.transform = "";
+    });
+  }
+}
 
+function moveTileRight(key, currentPos) {
+  let distance = 0;
 
+  while (currentPos < gridData[currentPos].Rlimit) {
+    let targetPos = currentPos + 1;
+
+    if (gridData[currentPos].count !== 0) {
+      if (
+        gridData[targetPos].count === 0 ||
+        gridData[targetPos].count === gridData[currentPos].count
+      ) {
+        if (gridData[targetPos].count === gridData[currentPos].count) {
+          merge = true;
+
+          distance += 125;
+
+          gridData[targetPos].count = 2 * gridData[currentPos].count;
+          gridData[currentPos].count = 0;
+          gridData[targetPos].merge = true;
+          updateScore(gridData[targetPos].count);
+          break;
+        } else {
+          distance += 125; // 125px is the height of each tile's step
+          gridData[targetPos].count = gridData[currentPos].count;
+          gridData[currentPos].count = 0;
+          currentPos = targetPos;
+        }
+      } else break;
+    }
+  }
+
+  if (distance > 0) {
+    let currentTile = selectClass(`tile-${key}`, 0);
+
+    let targetTile = selectClass(`tile-${key + 1}`, 0);
+
+    // Apply transition
+    currentTile.style.transition = "transform 0.3s";
+    currentTile.style.transform = `translateX(${distance}px)`;
+
+    // After the transition ends, update the grid and DOM
+    currentTile.addEventListener("transitionend", function handler() {
+      addNewTiles();
+      // Reset transform
+      currentTile.style.transition = "";
+      currentTile.style.transform = "";
     });
   }
 }
@@ -346,10 +554,8 @@ function getRandomTiles() {
   let RandomKey = Object.keys(gridData)[RandomNumber];
 
   if (gridData[RandomKey].count != 0) {
-
     getRandomTiles();
   } else {
     gridData[RandomKey].count = 2;
-
   }
 }

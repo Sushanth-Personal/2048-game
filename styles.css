@@ -69,11 +69,13 @@ html body{
     transform: translateY(-25px); 
 }
 .new-game{
-    height: 40px;
+    height: 80px;
     background-color: #8f7a66;
     color:#f9f6f2;
-    border-radius: 3px;
+    border-radius: 6px;
     border:none;
+    width: 40%;
+    font-size:1.5rem;
 }
 
 .grid-container{
