@@ -1,14 +1,15 @@
 **2048 Game**
 
 **Overview**
+
 This is a web-based implementation of the classic 2048 game, built using HTML, CSS, and JavaScript. The objective of the game is to slide numbered tiles on a grid to combine them and create a tile with the number 2048.
 
-Demo
-Play the Game
+**Live Demo Link:** 
 
-Features
-Responsive Design: The game is fully responsive and works well on desktop and mobile devices.
-Smooth Animations: Implemented smooth sliding and merging animations for a better user experience.
+**Features**
+
+**Responsive Design**: The game is fully responsive and works well on desktop and mobile devices.
+**Smooth Animations: ** Implemented smooth sliding and merging animations for a better user experience.
 Game Logic: Efficiently handles tile merging and movement with well-structured JavaScript functions.
 Restart Functionality: Players can easily restart the game to try again.
 Local Storage: The highest score is stored in the browser's local storage, so it remains even after refreshing the page.
