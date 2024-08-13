@@ -21,7 +21,9 @@ This is a web-based implementation of the classic 2048 game, built using HTML, C
 **Technologies Used**
 
 **HTML5**: For the basic structure of the game.
+
 **CSS3**: For styling and making the game visually appealing.
+
 **JavaScript**: For implementing the game logic and interactivity.
 
 
