@@ -36,7 +36,7 @@ The game ends when no more moves are possible.
 **Installation**
 To run the game locally:
 
-**Clone the repository:**
+**Clone the repository:**https://github.com/Sushanth-Personal/2048-game.git
 
 Open the index.html file in your web browser.
 Project Structure
