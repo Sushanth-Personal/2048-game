@@ -4,7 +4,7 @@
 
 This is a web-based implementation of the classic 2048 game, built using HTML, CSS, and JavaScript. The objective of the game is to slide numbered tiles on a grid to combine them and create a tile with the number 2048.
 
-**Live Demo Link:** 
+**Live Demo Link:** https://sushanth-personal.github.io/2048-game/
 
 **Features**
 
