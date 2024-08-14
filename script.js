@@ -206,7 +206,7 @@ function addNewTiles(textContent = 2) {
         font-size: 3.5rem;
         text-align: center;
         line-height: 106px;
-        border-radius: 10px;
+        border-radius: 3px;
         z-index: 1;
         top: ${gridData[key].top}px;
         left: ${gridData[key].left}px;
@@ -219,34 +219,43 @@ function addNewTiles(textContent = 2) {
       }
       if (gridData[key].count == 8) {
         newTile.style.backgroundColor = "#f3b27a";
+        newTile.style.color='white';
       }
 
       if (gridData[key].count == 16) {
         newTile.style.backgroundColor = "#f69664";
+        newTile.style.color='white';
       }
 
       if (gridData[key].count == 32) {
         newTile.style.backgroundColor = "#f77c5f";
+        newTile.style.color='white';
       }
 
       if (gridData[key].count == 64) {
         newTile.style.backgroundColor = "#f75f3b";
+        newTile.style.color='white';
       }
 
       if (gridData[key].count == 128) {
         newTile.style.backgroundColor = "#edd073";
+        newTile.style.color='white';
       }
       if (gridData[key].count == 256) {
         newTile.style.backgroundColor = "#edcc62";
+        newTile.style.color='white';
       }
       if (gridData[key].count == 512) {
         newTile.style.backgroundColor = "#89CFF0";
+        newTile.style.color='white';
       }
       if (gridData[key].count == 1024) {
         newTile.style.backgroundColor = "#0096FF";
+        newTile.style.color='white';
       }
       if (gridData[key].count == 2048) {
         newTile.style.backgroundColor = "#40B5AD";
+        newTile.style.color='white';
       }
 
       document.querySelector(".grid-container").appendChild(newTile);
