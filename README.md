@@ -1,12 +1,13 @@
-**2048 Game**
+# 2048 Game
 
 **Overview**
 
 This is a web-based implementation of the classic 2048 game, built using HTML, CSS, and JavaScript. The objective of the game is to slide numbered tiles on a grid to combine them and create a tile with the number 2048.
 
-**Live Demo Link:** https://sushanth-personal.github.io/2048-game/
+# Live Demo Link: 
+https://sushanth-personal.github.io/2048-game/
 
-**Features**
+# Features
 
 **Responsive Design**: The game is fully responsive and works well on desktop and mobile devices.
 
@@ -18,7 +19,7 @@ This is a web-based implementation of the classic 2048 game, built using HTML, C
 
 **Keyboard Controls:** Supports keyboard arrow keys.
 
-**Technologies Used**
+# Technologies Used
 
 **HTML5**: For the basic structure of the game.
 
@@ -27,16 +28,18 @@ This is a web-based implementation of the classic 2048 game, built using HTML, C
 **JavaScript**: For implementing the game logic and interactivity.
 
 
-**How to Play**
+# How to Play
 Use the arrow keys (or swipe on mobile) to move the tiles in one of the four directions.
 When two tiles with the same number collide, they merge into one.
 Your goal is to create a tile with the number 2048.
 The game ends when no more moves are possible.
 
-**Installation**
+# Installation
 To run the game locally:
 
-**Clone the repository:**https://github.com/Sushanth-Personal/2048-game.git
+**Clone the repository:**
+
+https://github.com/Sushanth-Personal/2048-game.git
 
 Open the index.html file in your web browser.
 Project Structure
@@ -44,7 +47,7 @@ index.html - The main HTML file.
 style.css - The CSS file for styling the game.
 script.js - The JavaScript file containing the game logic.
 
-**Contact**
+# Contact
 Feel free to reach out if you have any questions or suggestions!
 
 GitHub: Sushanth-Personal
