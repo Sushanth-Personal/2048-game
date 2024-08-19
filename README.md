@@ -7,6 +7,7 @@ This is a web-based implementation of the classic 2048 game, built using HTML, C
 # Live Demo Link: 
 https://sushanth-personal.github.io/2048-game/
 
+![rsz_66c3500414552](https://github.com/user-attachments/assets/3a0150c6-e98c-4b31-aa53-821d6e4a6e2f)
 # Features
 
 **Responsive Design**: The game is fully responsive and works well on desktop and mobile devices.
@@ -27,7 +28,6 @@ https://sushanth-personal.github.io/2048-game/
 
 **JavaScript**: For implementing the game logic and interactivity.
 
-![image](https://github.com/user-attachments/assets/b045e17f-8784-414d-99dd-1355a5e218a3)
 # How to Play
 Use the arrow keys (or swipe on mobile) to move the tiles in one of the four directions.
 When two tiles with the same number collide, they merge into one.
