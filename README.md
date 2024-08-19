@@ -27,7 +27,7 @@ https://sushanth-personal.github.io/2048-game/
 
 **JavaScript**: For implementing the game logic and interactivity.
 
-
+![image](https://github.com/user-attachments/assets/b045e17f-8784-414d-99dd-1355a5e218a3)
 # How to Play
 Use the arrow keys (or swipe on mobile) to move the tiles in one of the four directions.
 When two tiles with the same number collide, they merge into one.
